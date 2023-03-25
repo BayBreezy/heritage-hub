@@ -81,7 +81,7 @@
         </button>
       </div>
 
-      <div class="mt-10">
+      <div v-if="products && products.length" class="mt-10">
         <h3 class="mb-7 text-xl font-semibold">Related offerings</h3>
         <Swiper
           :space-between="10"
@@ -123,6 +123,17 @@ const { data, error } = await useAsyncData(() =>
 
 const entity = data.value?.entity;
 const products = data.value?.products;
+
+useHead({
+  title: entity?.title,
+  meta: [
+    {
+      hid: "description",
+      name: "description",
+      content: entity?.description || "",
+    },
+  ],
+});
 
 if (error.value) {
   useToast().error("Unable to load this entity");
