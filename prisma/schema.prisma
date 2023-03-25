@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DB")
+}
+
+model Entity {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type        String
+  location    String?
+  title       String
+  price       Float?
+  description String?
+  whatsapp    String?
+  media       Media[]
+  tags        String[]
+
+  topics    Topic[]
+  countries Country[]
+
+  @@map("entities")
+}
+
+model Topic {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  icon     String?
+  value    String
+  entity   Entity? @relation(fields: [entityId], references: [id])
+  entityId String? @db.ObjectId
+
+  @@map("topics")
+}
+
+model Country {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  icon     String?
+  value    String
+  entity   Entity? @relation(fields: [entityId], references: [id])
+  entityId String? @db.ObjectId
+
+  @@map("countries")
+}
+
+model Media {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  public_id     String
+  format        String
+  resource_type String
+  type          String
+  secure_url    String
+
+  entity   Entity? @relation(fields: [entityId], references: [id])
+  entityId String? @db.ObjectId
+
+  @@map("medias")
+}
