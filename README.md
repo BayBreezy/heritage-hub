@@ -1,4 +1,4 @@
-# Culture App
+# Heritage Hub
 
 ![Home Page](/public/ss.png)
 
