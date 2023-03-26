@@ -32,8 +32,10 @@ export default defineEventHandler(async (event) => {
         id: { not: id },
         OR: [
           {
-            topicIds: { hasSome: entity.topicIds },
-            countryIds: { hasSome: entity.countryIds },
+            topics: { some: { id: { in: entity.topics.map((t) => t.id) } } },
+            countries: {
+              some: { id: { in: entity.countries.map((c) => c.id) } },
+            },
           },
         ],
       },
