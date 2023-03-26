@@ -1,5 +1,7 @@
 # Culture App
 
+![Home Page](/public/ss.png)
+
 ## Setup
 
 Clone the repo and install the dependencies.

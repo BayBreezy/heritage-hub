@@ -24,8 +24,10 @@ model Entity {
   media       Media[]
   tags        String[]
 
-  topics    Topic[]
-  countries Country[]
+  topics     Topic[]   @relation(references: [id], fields: [topicIds])
+  topicIds   String[]  @db.ObjectId
+  countries  Country[] @relation(references: [id], fields: [countryIds])
+  countryIds String[]  @db.ObjectId
 
   @@map("entities")
 }
@@ -35,11 +37,12 @@ model Topic {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name     String
-  icon     String?
-  value    String
-  entity   Entity? @relation(fields: [entityId], references: [id])
-  entityId String? @db.ObjectId
+  name  String
+  icon  String?
+  value String
+
+  entities  Entity[] @relation(references: [id], fields: [entityIds])
+  entityIds String[] @db.ObjectId
 
   @@map("topics")
 }
@@ -49,11 +52,11 @@ model Country {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name     String
-  icon     String?
-  value    String
-  entity   Entity? @relation(fields: [entityId], references: [id])
-  entityId String? @db.ObjectId
+  name      String
+  icon      String?
+  value     String
+  entities  Entity[] @relation(references: [id], fields: [entityIds])
+  entityIds String[] @db.ObjectId
 
   @@map("countries")
 }

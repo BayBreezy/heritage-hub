@@ -90,7 +90,7 @@
           :breakpoints="breakpoints"
         >
           <SwiperSlide v-for="p in products" tag="div">
-            <NuxtLink to="/entity/123">
+            <NuxtLink :to="`/entity/${p.id}`">
               <div
                 :style="`background-image: url('${p.media[0].secure_url}')`"
                 class="item relative h-[250px] w-full overflow-hidden rounded-xl bg-cover bg-center"
@@ -136,7 +136,9 @@ useHead({
 });
 
 if (error.value) {
-  useToast().error("Unable to load this entity");
+  if (process.client) {
+    useToast().error("Unable to load this entity");
+  }
   await navigateTo("/");
 }
 

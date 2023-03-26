@@ -28,7 +28,14 @@ export default defineEventHandler(async (event) => {
     // get related products based on the topics & countries
     const products = await prisma.entity.findMany({
       where: {
-        AND: [{ type: { equals: "Product" } }, { id: { not: entity.id } }],
+        type: "Product",
+        id: { not: id },
+        OR: [
+          {
+            topicIds: { hasSome: entity.topicIds },
+            countryIds: { hasSome: entity.countryIds },
+          },
+        ],
       },
       include: {
         media: {

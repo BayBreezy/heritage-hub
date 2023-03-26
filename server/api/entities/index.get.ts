@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       topics: true,
       media: {
         orderBy: {
-          format: "asc",
+          resource_type: "asc",
         },
       },
     },
